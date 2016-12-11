@@ -1,9 +1,8 @@
 package us.codecraft.webmagic.scripts;
 
 import com.google.common.collect.Sets;
+import com.sun.media.jfxmedia.logging.Logger;
 import org.apache.commons.cli.*;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Spider;
 import us.codecraft.webmagic.Task;
@@ -93,7 +92,7 @@ public class ScriptConsole {
                 .language(params.getLanguage()).scriptFromFile(params.getScriptFileName()).thread(params.getThread()).build();
         pageProcessor.getSite().setSleepTime(params.getSleepTime());
         pageProcessor.getSite().setRetryTimes(3);
-        pageProcessor.getSite().setAcceptStatCode(Sets.<Integer>newHashSet(200, 404,403, 500,502));
+        pageProcessor.getSite().setAcceptStatCode(Sets.<Integer>newHashSet(200, 404, 403, 500, 502));
         Spider spider = Spider.create(pageProcessor).thread(params.getThread());
         spider.clearPipeline().addPipeline(new Pipeline() {
             @Override
@@ -166,19 +165,16 @@ public class ScriptConsole {
     }
 
     private static void configLogger(String value) {
-        Logger rootLogger = Logger.getRootLogger();
         if ("debug".equalsIgnoreCase(value)) {
-            rootLogger.setLevel(Level.DEBUG);
+            Logger.setLevel(Logger.DEBUG);
         } else if ("info".equalsIgnoreCase(value)) {
-            rootLogger.setLevel(Level.INFO);
+            Logger.setLevel(Logger.INFO);
         } else if ("warn".equalsIgnoreCase(value)) {
-            rootLogger.setLevel(Level.WARN);
-        } else if ("trace".equalsIgnoreCase(value)) {
-            rootLogger.setLevel(Level.TRACE);
+            Logger.setLevel(Logger.WARNING);
         } else if ("off".equalsIgnoreCase(value)) {
-            rootLogger.setLevel(Level.OFF);
+            Logger.setLevel(Logger.OFF);
         } else if ("error".equalsIgnoreCase(value)) {
-            rootLogger.setLevel(Level.ERROR);
+            Logger.setLevel(Logger.ERROR);
         }
     }
 }
